@@ -1,0 +1,56 @@
+/* ---------- Work interlude: MagicBento grid + stats ---------- */
+#work-band {
+    position: fixed; inset: 0;
+    z-index: 12;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+    /* instant on/off — the band is not revealed, it is simply shown or not */
+    opacity: 0; visibility: hidden;
+}
+#work-band.active { opacity: 1; visibility: visible; }
+
+.work-panel {
+    width: min(1180px, calc(100% - 120px));
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+.work-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: #a1a1a1; margin-bottom: 24px;
+}
+
+/* ---------- The work grid is react-bits MagicBento (styles/magic-bento.css).
+   These rules only place it inside the fixed band and let it take pointers —
+   the section itself stays pointer-events: none so the rest of the stage is
+   still reachable. ---------- */
+.work-bento {
+    pointer-events: auto;
+}
+
+.work-stats {
+    display: flex; gap: clamp(32px, 6vw, 72px);
+    margin-top: 34px;
+}
+.stat { display: flex; flex-direction: column; gap: 6px; }
+.stat-value {
+    font-family: 'Italiana', serif;
+    font-size: clamp(30px, 3vw, 44px);
+    line-height: 1;
+    color: #f5f5f5;
+    font-variant-numeric: tabular-nums;
+}
+.stat-label {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: #a1a1a1;
+}
+
+/* ---------- The carousel band lives in styles/flex-carousel.css ---------- */
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+    .work-panel { width: calc(100% - 40px); padding: 0; }
+    .work-head { margin-bottom: 14px; }
+    .work-stats { gap: 26px; margin-top: 22px; }
+    .stat-value { font-size: 26px; }
+}

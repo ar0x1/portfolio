@@ -1,0 +1,68 @@
+/* ---------- Intro keycap (Originkit IsometricButton) ----------------------
+ * Sits directly under the EXPLORE craft, on the same centre line. There is no
+ * panel behind it: the page is pure black and the only light is the key's own
+ * white prism, which is the whole point of the component.
+ *
+ * z-index 502 — above the intro glass (500) and below the loader (700), so it can
+ * be pressed and never paints over the loading screen.
+ * ------------------------------------------------------------------------- */
+.intro-keycap {
+    position: fixed;
+    left: 50%;
+    /* the craft's face is centred at 50% and stands ~24px tall there, so this
+       clears it. The lanyard card that used to hang there is gone, which is what
+       frees the space below the craft for the key. */
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 502;
+    pointer-events: none;
+    /* Visible by default. The entrance is a TRANSFORM-only lift, deliberately not
+       an opacity fade: a CSS animation that stalls (heavy WebGL on the same
+       thread) must never be able to leave the key invisible. */
+    opacity: 1;
+    animation: keycap-in 900ms cubic-bezier(0.16, 1, 0.3, 1) 420ms backwards;
+}
+
+.intro-keycap {
+    /* the key's own prism light does the work; this is the haze it throws on the
+       black around it. Kept behind the key (`z-index: -1` on a stacking context)
+       and deliberately soft — a hard bloom would fight the isometric shading. */
+    filter: drop-shadow(0 0 26px rgba(255, 255, 255, 0.16))
+        drop-shadow(0 0 68px rgba(255, 255, 255, 0.1));
+}
+
+.intro-keycap__frame {
+    /* the drop's hit target re-enables pointer events itself; the frame only has
+       to listen for the bubble */
+    pointer-events: auto;
+}
+
+/* mount dance: it is already sitting on its own floor, so it only lifts in */
+@keyframes keycap-in {
+    from {
+        transform: translate(-50%, calc(-50% + 16px));
+    }
+    to {
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* when the craft goes, the key goes with it rather than floating over an empty
+   black room */
+.intro-keycap[data-gone='true'] {
+    animation: none;
+    pointer-events: none;
+    transition: opacity 320ms ease-out;
+    opacity: 0;
+    transform: translate(-50%, calc(-50% - 8px));
+}
+
+/* The keycap is now the ONLY launch trigger, and the craft no longer starts the
+   flight, so the key has to be reachable and legible from the keyboard too: it
+   carries `role="button" tabIndex={0}` and this is its focus ring. Monochrome,
+   thin, set well outside the key so it never fights the prism glow. */
+.intro-keycap__frame:focus-visible {
+    outline: 1px solid rgba(255, 255, 255, 0.55);
+    outline-offset: 10px;
+    border-radius: 20px;
+}

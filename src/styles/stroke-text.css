@@ -1,0 +1,64 @@
+/* react-bits StrokeText — vendored CSS (unchanged) */
+.stroke-text {
+  display: block;
+  width: 100%;
+  line-height: 0;
+}
+
+.stroke-text--hover {
+  cursor: pointer;
+}
+
+.stroke-text__svg {
+  display: block;
+  width: 100%;
+  max-width: var(--stroke-text-width, 600px);
+  height: auto;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.stroke-text__stroke,
+.stroke-text__fill {
+  user-select: none;
+}
+
+/* ---------- Hero usage ----------
+ * The hero line is now the Originkit `VectorWordmark` effect (see
+ * components/HeroStrokeTitle.tsx): one WebGL canvas whose host box is sized to
+ * the measured wordmark, so the block is left-aligned exactly where the old SVG
+ * was. The atlas carries its own inner pad (12% of the font size), so the
+ * wrapper only has to make up the difference to the 40 px grid line.
+ */
+.hero-stroke {
+  /* the glyphs sit on the left-most grid line (x = 40px); the wordmark's atlas
+     pads by ~12% of 44px, so the wrapper makes up the rest */
+  margin-left: 34px;
+  /* The slide is bottom-anchored, so a bottom margin is what lifts the block up
+     the frame. This parks the headline around the upper-middle of the viewport. */
+  margin-bottom: clamp(110px, 40vh, 400px);
+  /* hard ceiling: the block may never take more than half the frame width */
+  max-width: min(48vw, 620px);
+}
+
+/* the headline is transformed per frame while scrolling, so give the compositor
+   a stable layer to work with */
+.hero-stroke {
+  will-change: filter, transform, opacity;
+  transform-origin: 20% 50%;
+}
+
+.hero-stroke__line {
+  display: block;
+}
+
+/* the wordmark is one canvas: line spacing is baked into its atlas (0.3em), so
+   there is no CSS gap to tune here any more */
+
+@media (max-width: 900px) {
+  .hero-stroke {
+    /* mobile grid starts at 20px */
+    margin-left: 14px;
+    max-width: min(100%, 420px);
+  }
+}

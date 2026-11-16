@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Italiana&family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@1,500&family=Press+Start+2P&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+
+html, body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+body {
+    min-height: 900vh;
+    font-family: 'Outfit', sans-serif;
+    color: #ffffff;
+    overflow-x: hidden;
+    cursor: default;
+}
+
+/* ---------- Cursor --------------------------------------------------------
+   No custom cursor, in either mode: the browser's own pointer everywhere, on the
+   first screen and after the reveal. The Rem PNG set (`public/cursors/`), the
+   `body.site-ready` cursor rules and the `data/cursors.ts` map are gone, as is
+   the SplashCursor ink layer. Deleting the rules is enough — nothing else in the
+   app sets `cursor`.
+------------------------------------------------------------------------- */
+
+::-webkit-scrollbar { display: none; width: 0; }
+
+#webgl {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+    outline: none;
+}

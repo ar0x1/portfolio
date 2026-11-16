@@ -1,0 +1,78 @@
+/* ---------- Four scroll slides ---------- */
+.slide { position: absolute; bottom: 12%; pointer-events: none; }
+
+#slide-1 { left: 0; width: 100%; }
+#slide-1 .slide-title { margin-left: 60px; }
+#slide-1 .desc-row { position: relative; display: flex; width: 100%; }
+#slide-1 .col-1 {
+    margin-left: 60px;
+    width: calc(25vw - 60px);
+    max-width: calc(25vw - 60px);
+}
+#slide-1 .col-2 {
+    position: absolute;
+    left: calc(25vw + 40px);
+    width: calc(25vw - 60px);
+    max-width: calc(25vw - 60px);
+}
+
+#slide-2 { left: 0; width: 100%; }
+/* No scroll-reveal animation anywhere on this page: the editorial image is simply
+   there when its slide is the current one — no clip wipe, no scale-up. */
+#slide-2-img {
+    position: fixed;
+    top: 90px;
+    left: 60px;
+    width: calc(25vw - 60px);
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+}
+#slide-2-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+}
+#slide-2-img.active { opacity: 1; }
+
+#slide-2 .slide-title { margin-left: calc(25vw + 40px); }
+#slide-2 .slide-desc {
+    margin-left: calc(50vw + 20px);
+    width: calc(25vw - 60px);
+    max-width: calc(25vw - 60px);
+}
+
+#slide-3 {
+    left: calc(50vw + 20px);
+    width: calc(25vw - 60px);
+    max-width: calc(25vw - 60px);
+}
+#slide-3 .slide-title { white-space: nowrap; }
+
+#slide-4 { left: calc(25% + 40px); max-width: 600px; }
+
+.slide-title {
+    font-family: 'Italiana', serif;
+    font-size: 116px;
+    line-height: 1.0;
+    font-weight: 400;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+/* Body copy is either there or not — no fade-up, no delay. */
+.slide-desc {
+    font-size: 16px; line-height: 1.7; font-weight: 300;
+    color: #d4d4d4; letter-spacing: 0.5px;
+    opacity: 0;
+}
+.slide.active .slide-desc { opacity: 1; }
+
+/* Titles switch instantly with the slide: no per-character blur/rise, no stagger. */
+.slide-title .char {
+    display: inline-block;
+    opacity: 0;
+}
+.slide.active .slide-title .char { opacity: 1; }
+.slide.active { pointer-events: auto; }

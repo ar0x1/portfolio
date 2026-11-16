@@ -1,0 +1,18 @@
+/* ---------- Front page (intro gate) ----------
+   Pure black, one EXPLORE key in the centre (see keycap.css). */
+.intro {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), visibility 1s;
+}
+
+/* leaving: the black lifts as the scene takes over */
+.intro[data-state='leaving'] {
+    opacity: 0;
+    visibility: hidden;
+}

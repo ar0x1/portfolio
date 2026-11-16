@@ -1,0 +1,27 @@
+/* ---------- Small-screen safety net (desktop values above stay untouched) ---------- */
+/* Keep the nowrap "Liquid Metal" headline inside the frame on mid-size laptops. */
+@media (min-width: 901px) and (max-width: 1439px) {
+    #slide-3 .slide-title { font-size: clamp(70px, 7vw, 116px); }
+}
+@media (max-width: 900px) {
+    .cinematic-container { padding: 0 28px 28px 28px; }
+    .header-nav { display: none; }
+    .slide-title { font-size: clamp(48px, 11vw, 88px); }
+    #slide-1, #slide-2, #slide-3, #slide-4 {
+        left: 28px;
+        width: calc(100% - 56px);
+        max-width: calc(100% - 56px);
+    }
+    #slide-1 .slide-title, #slide-2 .slide-title { margin-left: 0; }
+    #slide-1 .col-1, #slide-1 .col-2, #slide-2 .slide-desc, #slide-3 {
+        position: relative; left: auto; margin-left: 0;
+        width: min(100%, 520px); max-width: min(100%, 520px);
+    }
+    #slide-1 .desc-row { display: block; }
+    #slide-1 .col-2 { margin-top: 12px; }
+    #slide-3 .slide-title { white-space: normal; }
+    #slide-2-img { width: 38vw; top: 100px; left: 28px; }
+    .grid-lines { left: 20px; right: 20px; width: calc(100% - 40px); }
+    .slide { bottom: 8%; }
+}
+

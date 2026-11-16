@@ -1,0 +1,130 @@
+/* ---------- Loading screen -------------------------------------------------
+ * A black sheet with the OrbConverge loop in the middle and a hairline progress
+ * rule under it. Everything here is the site's own language: pure black, ivory
+ * dots and hairlines, 10px/3px caps for the one label. No colour, no glass.
+ *
+ * z-index 700: above the intro glass (500) and the lanyard card (501) — the
+ * loader owns the screen outright until it hands over.
+ *
+ * The ending is a dissolve, not an explosion: the ball eases up 4.5% and fades
+ * out over 900 ms while the label goes in 260 ms, then the sheet itself
+ * cross-fades (820 ms) onto the intro that is already blooming underneath. No
+ * rings, no flash, no scale-up — nothing that draws attention to the mechanism.
+ * ------------------------------------------------------------------------- */
+.loader {
+    position: fixed;
+    inset: 0;
+    z-index: 700;
+    display: grid;
+    place-items: center;
+    background: #000000;
+    /* the sheet itself is what cross-fades into the next screen */
+    opacity: 1;
+    transition: opacity 820ms cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity;
+}
+
+.loader__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 34px;
+}
+
+/* ---------- the orb ---------- */
+.loader__orb {
+    position: relative;
+    width: 260px;
+    height: 260px;
+    opacity: 1;
+    transform: scale(1);
+    /* a long, even fade with the faintest outward breath — the ball lets go of
+       its shape rather than being thrown */
+    transition: opacity 900ms cubic-bezier(0.4, 0, 0.2, 1),
+                transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.loader__orb > canvas,
+.loader__orb > div {
+    position: absolute;
+    inset: 0;
+}
+
+/* ---------- label + progress ---------- */
+.loader__meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    transition: opacity 260ms ease-out;
+}
+
+.loader__label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.loader__bar {
+    position: relative;
+    display: block;
+    width: 168px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.16);
+    overflow: hidden;
+}
+
+.loader__bar-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    height: 1px;
+    background: #ffffff;
+    /* just longer than the 100 ms clock tick, so the rule reads as one continuous
+       sweep instead of fifty small steps — but never so long that it lags the
+       clock it is following */
+    transition: width 160ms linear;
+}
+
+/* ---------- the release ---------- */
+.loader[data-state='release'] .loader__orb {
+    opacity: 0;
+    transform: scale(1.045);
+}
+
+.loader[data-state='release'] .loader__meta,
+.loader[data-state='out'] .loader__meta {
+    opacity: 0;
+}
+
+/* ---------- the handover ---------- */
+.loader[data-state='out'] {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* reduced motion: same dissolve, just quicker and with no breath at all */
+.loader[data-reduced='true'] .loader__orb {
+    transition: opacity 420ms linear;
+}
+
+.loader[data-reduced='true'][data-state='release'] .loader__orb {
+    transform: none;
+    opacity: 0;
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 600px) {
+    .loader__inner {
+        gap: 26px;
+    }
+    .loader__orb {
+        width: 208px;
+        height: 208px;
+    }
+    .loader__bar {
+        width: 132px;
+    }
+}

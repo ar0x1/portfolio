@@ -1,0 +1,68 @@
+/* ==========================================================================
+   MONOCHROME — the site ships black, white and grey only.
+   --------------------------------------------------------------------------
+   This is the LAST stylesheet in `main.tsx`, so it is the single place where the
+   palette is decided for everything that cannot take a prop from `App.tsx`:
+
+     1. a few values that live inside files marked FROZEN (`.intro` room tint,
+        the craft's thruster glow) — overridden here instead of edited there,
+     2. anything that arrives as an image (the editorial photo, any future
+        remote art) — forced through a greyscale filter so a colour source can
+        never break the theme,
+     3. browser chrome: selection, focus rings, colour-scheme.
+
+   Everything that could take a prop was converted at the source (`App.tsx`
+   palettes, `MagicBento`'s neutral theme, the
+   spark colours in `three/sparks.ts`) — this file is not a blanket override.
+   ========================================================================== */
+
+:root {
+    color-scheme: dark;
+    /* the one accent: none. `--mono-ink` is the theme's equivalent of a brand
+       colour, kept as a variable so a future accent swap is a one-line change. */
+    --mono-ink: #ffffff;
+    --mono-ink-dim: rgba(255, 255, 255, 0.62);
+    --mono-hairline: rgba(255, 255, 255, 0.12);
+    --mono-void: #000000;
+}
+
+/* ---------- 1. frozen files, overridden not edited ---------------------- */
+
+/* ---------- 2. images are forced monochrome ---------------------------- */
+
+/* The editorial plate (slide 2) is a colour photograph from a remote host. */
+#slide-2-img img {
+    filter: grayscale(1) contrast(1.04);
+}
+
+/* Belt and braces for any future remote imagery inside the content layer. */
+.cinematic-container img,
+.work-bento img {
+    filter: grayscale(1);
+}
+
+/* ---------- 3. browser chrome ------------------------------------------ */
+
+::selection {
+    background: var(--mono-ink);
+    color: var(--mono-void);
+}
+::-moz-selection {
+    background: var(--mono-ink);
+    color: var(--mono-void);
+}
+
+:focus-visible {
+    outline: 2px solid var(--mono-ink);
+    outline-offset: 2px;
+}
+
+/* Nothing in the theme depends on a hue, so a forced-colours / high-contrast
+   pass only has to keep the hairlines visible. */
+@media (forced-colors: active) {
+    .grid-line,
+    .grid-horizontal-line,
+    .story-dash {
+        border-color: CanvasText;
+    }
+}
